@@ -5,10 +5,10 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Entity
-@Table(name = "artist")
 public class Artist {
     //Primary Key
     @Id
@@ -26,4 +26,7 @@ public class Artist {
     private LocalDate birthDate;
 
     // Relationships
+    @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Song> songs;
+
 }

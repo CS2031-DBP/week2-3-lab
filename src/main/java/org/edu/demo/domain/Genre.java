@@ -3,9 +3,10 @@ package org.edu.demo.domain;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
-@Table(name="genre")
 public class Genre {
     // Primary Key
     @Id
@@ -20,4 +21,6 @@ public class Genre {
     private String description;
 
     // Relationships
+    @ManyToMany(mappedBy = "genres", fetch = FetchType.LAZY)
+    private List<Song> songs;
 }
