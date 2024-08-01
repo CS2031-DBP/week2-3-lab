@@ -33,10 +33,4 @@ public class SongController {
         URI location = URI.create("/song/" + newSong.getId());
         return ResponseEntity.created(location).body("Song created successfully");
     }
-
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ErrorMessage> handleResourceNotFoundException(ResourceNotFoundException e) {
-        ErrorMessage error= new ErrorMessage(e.getMessage(), HttpStatus.NOT_FOUND.toString());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
-    }
 }

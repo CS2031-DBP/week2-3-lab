@@ -34,10 +34,4 @@ public class ArtistController {
 
         return ResponseEntity.ok(artist);
     }
-
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<ErrorMessage> handleResourceNotFoundException(ResourceNotFoundException e) {
-        ErrorMessage error= new ErrorMessage(e.getMessage(), HttpStatus.NOT_FOUND.toString());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
-    }
 }
