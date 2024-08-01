@@ -2,8 +2,11 @@ package org.edu.demo.controller;
 
 
 import org.edu.demo.domain.Artist;
+import org.edu.demo.exceptions.ErrorMessage;
+import org.edu.demo.exceptions.ResourceNotFoundException;
 import org.edu.demo.repository.ArtistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +28,16 @@ public class ArtistController {
 
     @GetMapping("{id}")
     public ResponseEntity<Artist> getArtistById(@PathVariable("id") Long artistId){
-        Artist artist = artistRepository.findById(artistId).orElse(null);
+        Artist artist = artistRepository
+                .findById(artistId)
+                .orElseThrow(() -> new ResourceNotFoundException("Artist with id " + artistId + " not found"));
+
         return ResponseEntity.ok(artist);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ErrorMessage> handleResourceNotFoundException(ResourceNotFoundException e) {
+        ErrorMessage error= new ErrorMessage(e.getMessage(), HttpStatus.NOT_FOUND.toString());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 }
