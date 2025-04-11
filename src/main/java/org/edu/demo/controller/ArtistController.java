@@ -17,7 +17,6 @@ import java.net.URI;
 @RestController
 @RequestMapping("/artist")
 public class ArtistController {
-
     @Autowired
     private ArtistRepository artistRepository;
 
@@ -25,27 +24,22 @@ public class ArtistController {
     private ModelMapper modelMapper;
 
     @PostMapping
-    public ResponseEntity<String> createArtist(@Valid @RequestBody NewArtistRequestDto artist){
+    public ResponseEntity<String> createArtist(@Valid @RequestBody NewArtistRequestDto artist) {
         Artist newArtist = new Artist();
         modelMapper.map(artist, newArtist);
-
         Artist savedArtist = artistRepository.save(newArtist);
-
         URI location = URI.create("/artist/" + savedArtist.getId());
         return ResponseEntity.created(location).body("Artist created successfully");
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<GetArtistResponseDto> getArtistById(@PathVariable("id") Long artistId){
+    public ResponseEntity<GetArtistResponseDto> getArtistById(@PathVariable("id") Long artistId) {
         Artist artist = artistRepository
                 .findById(artistId)
                 .orElseThrow(() -> new ResourceNotFoundException("Artist with id " + artistId + " not found"));
-
         GetArtistResponseDto artistResponse = new GetArtistResponseDto();
         modelMapper.map(artist, artistResponse);
-
         artist.getSongs().forEach(song -> artistResponse.getSongIdList().add(song.getId()));
-
         return ResponseEntity.ok(artistResponse);
     }
 }

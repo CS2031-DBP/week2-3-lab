@@ -2,13 +2,15 @@ package org.edu.demo.domain;
 
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Data
 @Entity
+@Getter
+@Setter
 public class Artist {
     //Primary Key
     @Id
@@ -28,5 +30,4 @@ public class Artist {
     // Relationships
     @OneToMany(mappedBy = "artist", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Song> songs;
-
 }

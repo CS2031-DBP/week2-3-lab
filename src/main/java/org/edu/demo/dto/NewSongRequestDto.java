@@ -1,12 +1,19 @@
 package org.edu.demo.dto;
 
-import jakarta.validation.constraints.*;
-import lombok.Data;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
 public class NewSongRequestDto {
     @NotNull
     @Size(min = 1, max = 100)
@@ -24,6 +31,7 @@ public class NewSongRequestDto {
        to avoid relationships automatic mapping by the model mapper.*/
     @NotNull
     private Long authorId;
+
     @NotNull
     private List<String> genreNameList;
 }

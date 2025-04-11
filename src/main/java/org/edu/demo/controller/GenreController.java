@@ -17,7 +17,6 @@ import java.net.URI;
 @RestController
 @RequestMapping("/genre")
 public class GenreController {
-
     @Autowired
     private GenreRepository genreRepository;
 
@@ -25,12 +24,10 @@ public class GenreController {
     private ModelMapper modelMapper;
 
     @PostMapping
-    public ResponseEntity<String> createGenre(@Valid @RequestBody NewGenreRequestDto genre){
+    public ResponseEntity<String> createGenre(@Valid @RequestBody NewGenreRequestDto genre) {
         Genre newGenre = new Genre();
         modelMapper.map(genre, newGenre);
-
         Genre savedGenre = genreRepository.save(newGenre);
-
         URI location = URI.create("/genres/" + savedGenre.getId());
         return ResponseEntity.created(location).body("Genre created successfully");
     }

@@ -1,14 +1,14 @@
 package org.edu.demo.exceptions;
 
-import lombok.Data;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
 public class ErrorMessage {
     String message;
-    String status;
 
-    public ErrorMessage(String message, String string) {
-        this.message = message;
-        this.status = string;
-    }
+    String status;
 }
